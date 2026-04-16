@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgis/postgis:15-3.4
+    container_name: leftoverlove-db
+    environment:
+      POSTGRES_USER: leftover
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: leftoverlove
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U leftover"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
